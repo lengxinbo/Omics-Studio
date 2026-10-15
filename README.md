@@ -2,6 +2,10 @@
 
 从细胞三维探索出发，连接分子生物学与多组学知识的中文学习网站。
 
+- 网站：https://omics-studio-learning.coralstar3.chatgpt.site （当前为私人访问）
+- GitHub：https://github.com/lengxinbo/Omics-Studio
+- 后续项目更新同步到本仓库，协作规则见 [AGENTS.md](AGENTS.md)。
+
 ## 本地运行
 
 在本目录运行 `node server.mjs`，打开 http://127.0.0.1:4173 。项目依赖已随站点保存，无需安装 npm 包。三维显示需要支持 WebGL 的现代浏览器。
