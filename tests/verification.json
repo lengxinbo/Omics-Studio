@@ -1,0 +1,58 @@
+{
+  "checks": [
+    {
+      "test": "Zoom button changes camera distance",
+      "pass": true
+    },
+    {
+      "test": "Dragging rotates 3D camera",
+      "pass": true
+    },
+    {
+      "test": "Click actual mitochondrion mesh selects explanation",
+      "pass": true,
+      "selected": "线粒体"
+    },
+    {
+      "test": "Incorrect answer explanation",
+      "pass": true
+    },
+    {
+      "test": "Quiz and bookmark persist after reload",
+      "pass": true
+    },
+    {
+      "test": "Notes saved safely as literal text",
+      "pass": true
+    },
+    {
+      "test": "Search finds terms within lesson points",
+      "pass": true
+    },
+    {
+      "test": "Simulated chart threshold changes results",
+      "pass": true
+    },
+    {
+      "test": "Process step highlights corresponding organelle",
+      "pass": true
+    },
+    {
+      "test": "All six course map sections render",
+      "pass": true
+    },
+    {
+      "test": "Mobile structure tap updates explanation",
+      "pass": true
+    },
+    {
+      "test": "Molecule scene updates to RNA",
+      "pass": true
+    },
+    {
+      "test": "390px mobile viewport stays 390px without overflow",
+      "pass": true
+    }
+  ],
+  "errors": []
+}
