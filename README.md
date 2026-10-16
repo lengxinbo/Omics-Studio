@@ -42,7 +42,15 @@
 
 入门课程详解、新知识点与新增练习位于 `dist/js/foundations.js`；`dist/js/exercises.js` 生成题库、统计结果并迁移旧答题记录。每道练习使用稳定的“知识点:题目”id，新增题目不覆盖旧答案。
 
-`dist/js/animations.js` 保存 9 个 SVG 过程演示与统一播放器：膜运输、分泌路线、ATP 合成、DNA 复制、转录、RNA 剪接、翻译、酶催化、信号传递。增加动画时同时定义所属章节、相关知识点、四步说明及绘图逻辑。
+`dist/js/animations.js` 保存 9 个 SVG 过程演示与统一播放器：膜运输、分泌路线、ATP 合成、DNA 复制、转录、RNA 剪接、翻译、酶催化、信号传递。增加动画时同时定义所属章节、相关知识点、步骤说明及绘图逻辑；播放器支持可变步骤数。
+
+### v1.8.0 · 跟着分子学习转录与翻译
+
+转录拆为 6 步：聚合酶就位、DNA 局部打开、NTP 接入、RNA 延长、终止释放、产物去向。翻译拆为 8 步：起始、Ala-tRNA 进入、肽键形成、移位、Phe-tRNA 进入、肽链转移、再次移位、释放回收。动画展示 A/P/E 位点、反密码子配对、空 tRNA 离开，以及释放因子识别终止密码子；分子位置由统一时间轴驱动，暂停和拖动进度可准确定位画面。
+
+每步配有解释与观察提示，可点击步骤卡片、播放本步后自动停下、连续播放、调速或放大细节。手机默认显示完整画面，放大后可左右滑动。转录与翻译的内容和绘图位于 `dist/js/molecular-motion.js`，样式位于 `dist/molecular-motion.css`；教材来源链接随动画展示。
+
+`node tests/molecular-motion.test.mjs` 检查阶段位置连续、移位距离与先释放后解离。启动本地服务后，`node tests/browser-molecular-motion.mjs` 检查 14 个步骤、单步播放自动停止、暂停画面稳定、时间轴、键盘和手机缩放；截图与检查结果保存在 `tests/motion-*`。
 
 组学条目、技术字段和来源位于 `dist/js/omics-data.js`；`dist/js/omics-ui.js` 负责图谱、对比与技术实验台，`dist/js/omics-model.js` 负责三维模型，`dist/omics.css` 保存对应布局。保留已有五大组学的测验选项和答案，避免改变旧记录含义。
 

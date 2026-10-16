@@ -1,4 +1,5 @@
 import {mountFigure} from './figure-effects.js';
+import {molecularLessons,molecularDiagram} from './molecular-motion.js';
 // Deterministic SVG process diagrams: every visible position is driven by the
 // timeline, so pause, scrub, replay and reduced-motion remain predictable.
 const step=(title,text)=>({title,text});
@@ -13,6 +14,7 @@ export const animations=[
  {id:'enzyme',title:'酶催化：结合、转化、释放',focus:{molecules:'enzyme'},legend:['大形状：酶','双圆点：底物','分开的圆点：产物'],note:'以一个底物分解为两个产物的抽象反应为例，不代表特定酶结构。',steps:[step('底物靠近活性位点','底物与酶接近，并通过适合的分子相互作用结合。不是所有分子都能以同样方式被这个酶催化。'),step('形成酶—底物复合物','底物被定位，相关相互作用帮助反应跨越能垒。真实分子可能同时发生构象变化。'),step('发生转化，形成产物','这里示意底物分解为两个产物。酶降低活化能，加快反应，并不任意改写反应平衡。'),step('产物释放，酶可继续使用','产物离开，酶通常可以参与下一轮催化。它没有在本次反应中被当成产物全部消耗。')]},
  {id:'signaling',title:'信号：从识别到细胞响应',focus:{expression:'signaling'},legend:['柔紫圆点：配体','湖蓝轮廓：受体与传递分子'],note:'细胞表面受体通路示意；不同通路的分子与调控方式不同。',steps:[step('信号分子接近受体','细胞外配体接近合适的受体。能否响应，首先取决于是否有能识别该信号的系统。'),step('受体识别并改变状态','配体结合受体，引起构象或相关分子状态变化。配体本身不一定进入细胞。'),step('细胞内分子接力','受体状态影响下游分子，信号在细胞内传递。图中连接线表示过程关系，不是实体管道。'),step('产生响应，并需要调控终止','已有蛋白活性、膜运输或基因表达等可能变化。响应依赖具体细胞背景，之后还需要反馈与终止。')]}
 ];
+for(const a of animations)if(molecularLessons[a.id])Object.assign(a,molecularLessons[a.id]);
 export const animationById=Object.fromEntries(animations.map(a=>[a.id,a]));
 const clamp=(v)=>Math.max(0,Math.min(1,v));
 const ease=(v)=>{v=clamp(v);return v*v*(3-2*v);};
@@ -26,6 +28,7 @@ const bases=(seq,y,fill,dir,count=seq.length,x=125,dx=48)=>seq.slice(0,count).sp
 const envelope=(body,title)=>`<svg viewBox="0 0 700 330" role="img" aria-label="${title}" xmlns="http://www.w3.org/2000/svg"><title>${title}</title>${body}</svg>`;
 
 export function diagram(id,p){
+ if(molecularLessons[id])return molecularDiagram(id,p);
  const phase=Math.min(3,Math.floor(p*4)),f=clamp(p*4-phase);let b='';
  if(id==='transport'){
   b+=text(165,32,'细胞外')+text(535,32,'细胞内')+rect(331,52,38,225,'#d3dcd5',12)+rect(320,135,60,60,'#95aab6',16)+rect(320,153,60,23,'#f7fafb',7);
@@ -53,27 +56,12 @@ export function diagram(id,p){
   if(separate<.8)for(let i=0;i<10;i++)b+=line(125+i*48,topY+18,125+i*48,bottomY-18,'#bdc4d1',1);
   if(p>.42){b+=bases(comp,topY+45,color.fresh,['5′','3′'],grown);for(let i=10-grown;i<10;i++)b+=rect(125+i*48-16,bottomY-62,32,34,color.fresh,7)+text(125+i*48,bottomY-40,seq[i],17,'#fff');b+=text(83,bottomY-40,'3′',13)+text(599,bottomY-40,'5′',13);}
   b+=text(350,317,phase===3?'子代 1：旧 + 新　　子代 2：新 + 旧':'新链始终以 5′ → 3′ 方向延长',13);
- }else if(id==='transcription'){
-  const seq='TACGGACTT',rna='AUGCCUGAA',grown=Math.round(clamp((p-.18)/.64)*9),x=125+Math.min(8,grown)*48,release=ease((p-.8)/.2);
-  b+=text(350,33,'模板 DNA → 新生 RNA')+bases(seq,110,color.old,['3′','5′'])+text(60,115,'DNA',12,'#7f8da2');
-  b+=bases(rna,207+release*40,color.rna,['5′','3′'],grown)+text(60,212+release*40,'RNA',12,'#7f8da2');
-  if(p<.92)b+=`<ellipse cx="${x}" cy="153" rx="35" ry="62" fill="#d2c5b044" stroke="#b6a88f" stroke-width="3"/>`+text(x,48,'RNA 聚合酶',12);
-  b+=text(350,305,phase===3?'DNA 保留；RNA 是新合成的分子':'注意：RNA 使用 U，不使用 T',13);
  }else if(id==='splicing'){
   const separation=ease((p-.3)/.35),join=ease((p-.52)/.38);const exons=[{x:85,to:183,name:'外显子 1'},{x:295,to:295,name:'外显子 2'},{x:505,to:407,name:'外显子 3'}];
   b+=text(350,34,'前体 mRNA → 连接后的 RNA')+line(75,160,625,160,'#c4ceda',3);
   for(const e of exons){const x=lerp(e.x,e.to,join);b+=rect(x,133,110,54,'#6e9fc6',9)+text(x+55,165,e.name,13,'#fff');}
   for(let i=0;i<2;i++){const x=200+i*210,y=133-separation*66;b+=`<g opacity="${1-separation*.74}">${rect(x,y,90,54,'#cfaa7c',9)+text(x+45,y+32,`内含子 ${i+1}`,13,'#fff')}</g>`;}
   b+=text(350,260,phase>=2?'移除内含子，连接外显子':'图中处理的是 RNA，DNA 不被剪掉',14)+text(350,300,'片段长度与真实序列无关，仅展示连接关系。',12,'#93a1b3');
- }else if(id==='translation'){
-  const codons=['AUG','GCU','UUU','UAA'],names=['Met','Ala','Phe'],positions=[140,280,420,560];
-  b+=text(350,28,'mRNA → 多肽链')+line(75,210,625,210,'#9aaebf',4)+text(60,216,'5′',12)+text(648,216,'3′',12);
-  const rx=phase<3?lerp(positions[phase],positions[Math.min(3,phase+1)],ease(Math.max(0,f-.65)/.35)):560;
-  b+=`<ellipse cx="${rx}" cy="185" rx="67" ry="74" fill="#a6b7c62b" stroke="#a4b5c5" stroke-width="3"/>`;
-  codons.forEach((c,i)=>{b+=rect(positions[i]-43,190,86,42,i===3?'#c2b29b':'#9f83c4',8)+text(positions[i],217,c,18,'#fff');});
-  const count=Math.min(3,phase+1),release=phase===3?ease(f):0;for(let i=0;i<count;i++){const x=rx-45+i*35-release*170,y=99-release*35;if(i)b+=line(x-20,y,x-15,y,'#a89d90',4);b+=circle(x,y,15,['#cba16e','#75b49b','#819acb'][i])+text(x,y+4,names[i],9,'#fff');}
-  if(phase<3){const tx=positions[phase]+30*Math.sin(f*Math.PI);b+=line(tx,133,tx,164,'#a3afa6',4)+text(tx+25,154,'tRNA',11);}else b+=text(560,137,'释放因子',12);
-  b+=text(350,297,phase===3?'UAA 是终止信号：不再加入新氨基酸':'每三个碱基构成一个密码子',13);
  }else if(id==='enzyme'){
   const x=phase===0?lerp(120,310,ease(f)):phase===1?310:phase===2?lerp(310,345,ease(f)):lerp(345,565,ease(f));
   b+=text(350,30,'一次催化循环')+`<path d="M300 240C230 240 205 115 287 94L303 142Q326 164 349 142L368 94C448 105 440 240 370 248Z" fill="#75a5c7" stroke="#8fa2b5" stroke-width="3"/>`+text(333,214,'酶',20,'#fff');
@@ -91,21 +79,45 @@ export function diagram(id,p){
 
 export class AnimationPlayer{
  constructor(root,{courseId,preferred,onSelect}){
-  this.root=root;this.list=animations.filter(a=>a.focus[courseId]);this.courseId=courseId;this.onSelect=onSelect;this.current=this.list.find(a=>a.id===preferred)||this.list[0];this.progress=0;this.playing=false;this.speed=1;this.frame=null;this.last=0;this.destroyed=false;this.activeStep=-1;
-  root.innerHTML=`<div class="animation-player"><div class="animation-header"><label for="animation-select">过程动画</label><select id="animation-select">${this.list.map(a=>`<option value="${a.id}" ${a===this.current?'selected':''}>${a.title}</option>`).join('')}</select></div><div class="animation-legend"></div><div class="process-canvas"></div><div class="animation-caption" aria-live="polite"><span class="animation-step"></span><h3></h3><p></p></div><div class="animation-timeline"><label for="animation-seek">动画进度 <output>0%</output></label><input id="animation-seek" type="range" min="0" max="1000" step="1" value="0" aria-label="动画时间轴"></div><div class="animation-controls"><button data-anim="prev" aria-label="上一步">← 上一步</button><button class="play-animation" data-anim="play">播放动画</button><button data-anim="next" aria-label="下一步">下一步 →</button><button data-anim="reset">重播</button><label>速度 <select id="animation-speed" aria-label="动画速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="1.5">1.5×</option></select></label></div><p class="animation-note"></p></div>`;
+  this.root=root;this.list=animations.filter(a=>a.focus[courseId]);this.courseId=courseId;this.onSelect=onSelect;this.current=this.list.find(a=>a.id===preferred)||this.list[0];this.progress=0;this.playing=false;this.speed=1;this.frame=null;this.last=0;this.destroyed=false;this.activeStep=-1;this.stopAt=1;this.zoom=false;
+  root.innerHTML=`<div class="animation-player"><div class="animation-header"><label for="animation-select">过程动画</label><select id="animation-select">${this.list.map(a=>`<option value="${a.id}" ${a===this.current?'selected':''}>${a.title}</option>`).join('')}</select></div><div class="animation-legend"></div><div class="molecular-toolbar"><span>跟着分子走，一次看懂一个动作</span><button data-anim="zoom" aria-pressed="false">放大细节</button></div><div class="process-canvas" tabindex="0" aria-label="过程动画画面；放大后可横向滚动"></div><div class="animation-chapters" aria-label="选择动画步骤"></div><div class="animation-caption" aria-live="polite"><span class="animation-step"></span><h3></h3><p></p><div class="animation-look"></div></div><div class="animation-timeline"><label for="animation-seek">动画进度 <output>0%</output></label><input id="animation-seek" type="range" min="0" max="1000" step="1" value="0" aria-label="动画时间轴"></div><div class="animation-controls"><button data-anim="prev" aria-label="上一步">← 上一步</button><button class="play-animation" data-anim="play">连续播放</button><button data-anim="step">播放本步</button><button data-anim="next" aria-label="下一步">下一步 →</button><button data-anim="reset">重播</button><label>速度 <select id="animation-speed" aria-label="动画速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="1.5">1.5×</option></select></label></div><p class="animation-note"></p><a class="animation-source" target="_blank" rel="noopener">参考：Molecular Biology of the Cell · NCBI Bookshelf ↗</a></div>`;
   this.abort=new AbortController();const opts={signal:this.abort.signal};
   root.querySelector('#animation-select').addEventListener('change',e=>{this.pause();this.current=animationById[e.target.value];this.progress=0;this.activeStep=-1;this.draw();this.onSelect?.(this.current.focus[this.courseId],this.current.id);},opts);
   root.querySelector('#animation-seek').addEventListener('input',e=>{this.pause();this.progress=Number(e.target.value)/1000;this.draw();},opts);
   root.querySelector('#animation-speed').addEventListener('change',e=>{this.speed=Number(e.target.value);},opts);
-  root.addEventListener('click',e=>{const b=e.target.closest('[data-anim]');if(!b)return;const action=b.dataset.anim;if(action==='play'){this.playing?this.pause():this.play();}else{this.pause();if(action==='reset')this.progress=0;else{const i=Math.min(3,Math.floor(this.progress*4));this.progress=Math.max(0,Math.min(3,i+(action==='next'?1:-1)))/4+.001;}this.draw();}},opts);
+  root.addEventListener('click',e=>{
+   const chapter=e.target.closest('[data-chapter]');if(chapter){this.pause();this.progress=Number(chapter.dataset.chapter)/this.current.steps.length;this.draw();return;}
+   const b=e.target.closest('[data-anim]');if(!b)return;const action=b.dataset.anim;
+   if(action==='zoom'){this.zoom=!this.zoom;const canvas=this.root.querySelector('.process-canvas');canvas.classList.toggle('zoomed',this.zoom);canvas.scrollLeft=0;this.root.querySelector('.molecular-toolbar span').textContent=this.zoom?'左右滑动画面，查看分子细节':'跟着分子走，一次看懂一个动作';b.textContent=this.zoom?'还原全景':'放大细节';b.setAttribute('aria-pressed',String(this.zoom));return;}
+   if(action==='play'){this.playing?this.pause():this.play();return;}
+   this.pause();const n=this.current.steps.length,i=this.index();
+   if(action==='step'){this.progress=i/n;this.stopAt=Math.min(1,(i+1)/n-0.000001);this.play(true);return;}
+   this.progress=action==='reset'?0:Math.max(0,Math.min(n-1,i+(action==='next'?1:-1)))/n;this.draw();
+  },opts);
   document.addEventListener('visibilitychange',()=>{if(document.hidden)this.pause();},opts);
   this.draw();
  }
- draw(){if(this.destroyed)return;const a=this.current,index=Math.min(3,Math.floor(this.progress*4)),s=a.steps[index];mountFigure(this.root.querySelector('.process-canvas'),diagram(a.id,this.progress),{continuous:true});this.root.querySelector('#animation-seek').value=Math.round(this.progress*1000);this.root.querySelector('output').textContent=Math.round(this.progress*100)+'%';if(index!==this.activeStep){this.root.querySelector('.animation-step').textContent=`步骤 ${index+1} / 4`;this.root.querySelector('.animation-caption h3').textContent=s.title;this.root.querySelector('.animation-caption p').textContent=s.text;this.activeStep=index;}this.root.querySelector('.animation-legend').textContent=a.legend.join('  ·  ');this.root.querySelector('.animation-note').textContent=a.note;this.root.querySelector('[data-anim="prev"]').disabled=this.progress<.25;this.root.querySelector('[data-anim="next"]').disabled=this.progress>=.75;this.updateButton();}
- updateButton(){const b=this.root.querySelector('[data-anim="play"]');if(b){b.textContent=this.playing?'暂停':'播放动画';b.setAttribute('aria-pressed',String(this.playing));}}
- play(){if(this.progress>=1)this.progress=0;this.playing=true;this.last=performance.now();this.updateButton();this.frame=requestAnimationFrame(t=>this.tick(t));}
- tick(t){if(!this.playing||this.destroyed)return;const dt=Math.min(100,t-this.last);if(dt>=30){this.progress=Math.min(1,this.progress+dt*this.speed/20000);this.last=t;this.draw();}if(this.progress>=1){this.pause();return;}this.frame=requestAnimationFrame(t=>this.tick(t));}
+ index(){return Math.min(this.current.steps.length-1,Math.floor(this.progress*this.current.steps.length+1e-10));}
+ draw(){
+  if(this.destroyed)return;const a=this.current,index=this.index(),s=a.steps[index],n=a.steps.length;
+  mountFigure(this.root.querySelector('.process-canvas'),diagram(a.id,this.progress),{continuous:true});
+  this.root.querySelector('#animation-seek').value=Math.round(this.progress*1000);this.root.querySelector('output').textContent=Math.round(this.progress*100)+'%';
+  if(index!==this.activeStep){
+   this.root.querySelector('.animation-step').textContent=`步骤 ${index+1} / ${n}`;this.root.querySelector('.animation-caption h3').textContent=s.title;this.root.querySelector('.animation-caption p').textContent=s.text;
+   this.root.querySelector('.animation-look').textContent=s.look?'观察提示 · '+s.look:'';
+   const chapters=this.root.querySelector('.animation-chapters');
+   if(chapters.dataset.id!==a.id){chapters.innerHTML=a.steps.map((v,i)=>`<button data-chapter="${i}" aria-label="第 ${i+1} 步：${v.title}"><b>${String(i+1).padStart(2,'0')}</b><span>${v.title.split('：')[0]}</span></button>`).join('');chapters.dataset.id=a.id;}
+   chapters.querySelectorAll('button').forEach((b,i)=>{b.classList.toggle('active',i===index);b.setAttribute('aria-current',i===index?'step':'false');});
+   this.activeStep=index;
+  }
+  this.root.querySelector('.animation-legend').textContent=a.legend.join('  ·  ');this.root.querySelector('.animation-note').textContent=a.note;
+  const source=this.root.querySelector('.animation-source');source.hidden=!a.source;if(a.source)source.href=a.source;
+  this.root.querySelector('[data-anim="prev"]').disabled=index===0;this.root.querySelector('[data-anim="next"]').disabled=index===n-1;this.updateButton();
+ }
+ updateButton(){const b=this.root.querySelector('[data-anim="play"]');if(b){b.textContent=this.playing?'暂停':'连续播放';b.setAttribute('aria-pressed',String(this.playing));}}
+ play(single=false){if(this.playing)this.pause();if(!single)this.stopAt=1;if(this.progress>=1)this.progress=0;this.playing=true;this.last=performance.now();this.updateButton();this.frame=requestAnimationFrame(t=>this.tick(t));}
+ tick(t){if(!this.playing||this.destroyed)return;const dt=Math.min(100,t-this.last);if(dt>=30){this.progress=Math.min(this.stopAt,this.progress+dt*this.speed/(this.current.duration||20000));this.last=t;this.draw();}if(this.progress>=this.stopAt){this.pause();return;}this.frame=requestAnimationFrame(t=>this.tick(t));}
  pause(){this.playing=false;cancelAnimationFrame(this.frame);this.frame=null;this.updateButton();}
  destroy(){this.pause();this.abort.abort();this.destroyed=true;}
- getState(){return{id:this.current.id,progress:this.progress,playing:this.playing,speed:this.speed};}
+ getState(){return{id:this.current.id,progress:this.progress,playing:this.playing,speed:this.speed,step:this.index()+1,stepCount:this.current.steps.length};}
 }

@@ -21,7 +21,7 @@ try {
  await page.locator('[data-anim="play"]').click();await page.waitForFunction(()=>__omics.getState().animation.progress>.03);
  await page.locator('[data-anim="play"]').click();var paused=await page.evaluate(()=>__omics.getState().animation.progress);
  await page.waitForTimeout(250);assert.equal(await page.evaluate(()=>__omics.getState().animation.progress),paused);
- await page.locator('#animation-seek').fill('800');assert.match(await page.locator('.animation-step').textContent(),/4/);
+ await page.locator('#animation-seek').fill('800');assert.equal(await page.locator('.animation-step').textContent(),await page.evaluate(()=>{const a=__omics.getState().animation;return `步骤 ${a.step} / ${a.stepCount}`;}));
  await page.locator('[data-anim="reset"]').click();assert.equal(await page.evaluate(()=>__omics.getState().animation.progress),0);
  await page.locator('#animation-speed').selectOption('1.5');assert.equal(await page.evaluate(()=>__omics.getState().animation.speed),1.5);
  await page.locator('#animation-select').selectOption('secretion');assert.equal(await page.locator('#detail-panel h2').textContent(),'高尔基体');
@@ -31,7 +31,7 @@ try {
  await page.locator('#toggle-labels').click();var point=await page.evaluate(()=>__omics.projectTopic('nucleus'));var box=await page.locator('#canvas-host').boundingBox();await page.mouse.click(box.x+point.x,box.y+point.y);assert.equal(await page.locator('#detail-panel h2').textContent(),'细胞核');
  await page.mouse.move(box.x+box.width/2,box.y+box.height/2);var rotation=await page.evaluate(()=>__omics.getState().viewer);await page.mouse.down();await page.mouse.move(box.x+box.width/2+90,box.y+box.height/2+30,{steps:8});await page.mouse.up();await page.waitForTimeout(200);assert.notDeepEqual(await page.evaluate(()=>__omics.getState().viewer),rotation);
  await page.locator('[data-course="expression"]').click();await page.locator('[data-mode="process"]').click();
- for(const id of ['replication','transcription','splicing','translation','signaling']){await page.locator('#animation-select').selectOption(id);await page.locator('#animation-seek').fill('780');assert.match(await page.locator('.animation-step').textContent(),/4/);}
+ for(const id of ['replication','transcription','splicing','translation','signaling']){await page.locator('#animation-select').selectOption(id);await page.locator('#animation-seek').fill('780');assert.equal(await page.locator('.animation-step').textContent(),await page.evaluate(()=>{const a=__omics.getState().animation;return `步骤 ${a.step} / ${a.stepCount}`;}));}
  await page.locator('#animation-select').selectOption('translation');await page.locator('#animation-seek').fill('610');await page.screenshot({path:'tests/translation-desktop.png'});
  await page.locator('.topnav [data-view="review"]').click();assert.equal(await page.locator('.review-card').count(),272);
  await page.locator('#review-course').selectOption('cell');assert.equal(await page.locator('.review-card').count(),27);

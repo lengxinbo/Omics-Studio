@@ -1,0 +1,17 @@
+{
+  "date": "2026-10-16T12:34:16.974Z",
+  "status": "passed",
+  "transcriptionSteps": 6,
+  "translationSteps": 8,
+  "checks": [
+    "all 14 phase captions",
+    "play current step and stop before next",
+    "continuous play resumes",
+    "pause freezes actual SVG",
+    "timeline and replay",
+    "keyboard chapter selection",
+    "390px layout and detail zoom",
+    "reduced motion manual playback",
+    "no page errors"
+  ]
+}
