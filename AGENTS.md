@@ -12,7 +12,8 @@
 ## 扩展方式
 
 - 课程入口为 `dist/js/content.js`，入门详解和新增题目为 `dist/js/foundations.js`，统一题库与迁移逻辑为 `dist/js/exercises.js`，过程动画为 `dist/js/animations.js`；保留现有知识点 id 以兼容用户学习记录。
-- 三维模型位于 `dist/js/model.js`，页面交互位于 `dist/js/app.js`，样式位于 `dist/style.css`。
+- 组学图谱内容在 `dist/js/omics-data.js`，图谱与技术演示在 `dist/js/omics-ui.js`，组学三维模型在 `dist/js/omics-model.js`。保留核心五大组学旧测验语义；新增方向沿用统一记录与检索。
+- 细胞与分子三维模型位于 `dist/js/model.js`，页面交互位于 `dist/js/app.js`，样式位于 `dist/style.css`。
 - 保持用户认可的浅色三栏布局和低饱和度模型。细胞模型必须支持旋转、缩放和点击结构查看讲解。
 - 课程面向零基础用户，关键术语提供英文；模型与模拟数据要保持清楚标注，科学表述与证据一致。
 - 制作、修改或输出包含文本的文件时应用 `D:/CodexData/skills/anti-defensive-writing/SKILL.md`。同一会话已读过则无需重读。

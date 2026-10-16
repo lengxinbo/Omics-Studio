@@ -1,0 +1,17 @@
+{
+  "date": "2026-10-16T06:04:09.517Z",
+  "status": "passed",
+  "directions": 40,
+  "modelTypes": 11,
+  "principleDemos": 8,
+  "checks": [
+    "all 40 topics render model and techniques",
+    "3D zoom drag mesh picking",
+    "technique workflow and cross-topic comparison",
+    "8 simulations strategy differences",
+    "play pause seek",
+    "search and chapter navigation",
+    "390px mobile atlas lab comparison",
+    "no uncaught browser errors"
+  ]
+}

@@ -1,4 +1,5 @@
 import {newTopics,lessons,foundationSources} from './foundations.js';
+import {omicsTopics,omicsReferences} from './omics-data.js';
 // Add a topic here and reference its id in a course. The classroom, search,
 // knowledge map, quiz and local progress all consume the same content schema.
 export const sources={cell:{label:'OpenStax · 真核细胞',url:'https://openstax.org/books/biology-2e/pages/4-3-eukaryotic-cells'},gene:{label:'OpenStax · 基因与蛋白质',url:'https://openstax.org/books/biology-2e/pages/15-introduction'},regulation:{label:'OpenStax · 基因表达调控',url:'https://openstax.org/books/biology-2e/pages/16-introduction'},omics:{label:'EMBL-EBI · 多组学入门',url:'https://www.ebi.ac.uk/training/events/introduction-multiomics-data-integration-and-visualisation/'},genome:{label:'NHGRI · 遗传学术语',url:'https://www.genome.gov/genetics-glossary'}};
@@ -32,6 +33,8 @@ export const topics=[
  t('case','从问题到证据','From question to evidence','#9baeb2','为什么某个基因的 RNA 增加，而对应蛋白质变化不明显？这个问题可以串联转录、翻译与降解等多个层面。',['先确认样本与测量时间是否匹配。','再考虑翻译效率、蛋白质稳定性与测量覆盖。','设计后续实验，区分不同解释。'],'面对 RNA 与蛋白质不一致，第一步更合理的是？',['核对样本、时间与测量条件','立即认定其中一种技术错误'],0,'先确认数据可比性，再提出并检验生物学解释。',['rna','protein','integration'],'omics')
 ];
 topics.push(...newTopics);
+for(const incoming of omicsTopics){const old=topics.find(t=>t.id===incoming.id);if(old){Object.assign(old,{summary:incoming.summary,points:incoming.points,links:incoming.links,omics:incoming.omics,source:incoming.source});}else topics.push(incoming);}
+for(const [id,ref] of Object.entries(omicsReferences))sources['atlas-'+id]=ref;
 Object.assign(sources,foundationSources);
 for(const item of topics){if(lessons[item.id])item.lesson=lessons[item.id];}
 export const byId=Object.fromEntries(topics.map(x=>[x.id,x]));
@@ -39,7 +42,7 @@ export const courses=[
  {id:'cell',name:'认识细胞',en:'THE CELL',title:'从一个细胞开始',subtitle:'认识一个结构，看懂一个过程，再用练习确认理解。',icon:'cell',kind:'cell',minutes:55,topics:['cell-basics','membrane','cytoplasm','nucleus','mitochondria','ribosome','er','golgi','lysosome']},
  {id:'molecules',name:'DNA、RNA 与蛋白质',en:'MOLECULES OF LIFE',title:'认识生命的分子',subtitle:'从组成单位到功能分子，一步步建立自己的知识地图。',icon:'dna',kind:'molecule',minutes:45,topics:['nucleotide','dna','gene-chromosome','rna','protein','enzyme','metabolite']},
  {id:'expression',name:'基因如何表达',en:'FROM CODE TO FUNCTION',title:'让遗传信息开始工作',subtitle:'跟着复制、转录、剪接与翻译，理解信息如何被保存和使用。',icon:'process',kind:'molecule',minutes:50,topics:['replication','transcription','rna-processing','translation','regulation','signaling']},
- {id:'omics',name:'认识五大组学',en:'FIVE OMICS LAYERS',title:'同一个生命，不同的视角',subtitle:'理解每种组学测什么，以及它能帮助回答的问题。',icon:'layers',kind:'cards',minutes:18,topics:['genomics','epigenomics','transcriptomics','proteomics','metabolomics']},
+ {id:'omics',name:'认识组学 · 全景图谱',en:'THE OMICS ATLAS',title:'走进组学的全景世界',subtitle:'从研究对象到测量方法，用模型与实验台理解每一种视角。',icon:'layers',kind:'cards',minutes:180,topics:omicsTopics.map(t=>t.id)},
  {id:'data',name:'读图、单细胞与空间',en:'LEARN TO READ THE DATA',title:'从一个数据点读懂结果',subtitle:'先理解样本与坐标，再走向单细胞和空间信息。',icon:'chart',kind:'data',minutes:20,topics:['replicates','volcano','singlecell','spatial']},
  {id:'integration',name:'多组学整合',en:'CONNECT THE EVIDENCE',title:'把不同层次的证据连接起来',subtitle:'围绕一个问题，理解互补信息如何共同构成解释。',icon:'network',kind:'cards',minutes:12,topics:['integration','case']}
 ];
