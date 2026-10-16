@@ -28,7 +28,7 @@ export class BiologyViewer{
   this.renderer.setAnimationLoop(()=>{if(!this.active||document.hidden)return;this.controls.update();this.updateLabels();this.renderer.render(this.scene,this.camera);});
   this.renderer.domElement.addEventListener('webglcontextlost',e=>{e.preventDefault();this.active=false;this.host.dispatchEvent(new CustomEvent('viewer-error',{detail:'三维显示暂时中断，请刷新页面恢复。左侧知识点仍可学习。'}));});
  }
- material(color,options={}){return new THREE.MeshPhysicalMaterial({color,roughness:.49,metalness:0,clearcoat:.2,clearcoatRoughness:.36,bumpMap:this.bump,bumpScale:.022,...options});}
+ material(color,options={}){const tint=new THREE.Color(color),hsl={};tint.getHSL(hsl,THREE.SRGBColorSpace);tint.setHSL(hsl.h,Math.min(.48,hsl.s*1.65+.04),hsl.l,THREE.SRGBColorSpace);return new THREE.MeshPhysicalMaterial({color:tint,roughness:.42,metalness:0,clearcoat:.2,clearcoatRoughness:.36,bumpMap:this.bump,bumpScale:.022,...options});}
  mesh(geometry,material,parent,id,position=[0,0,0],scale=[1,1,1]){const mesh=new THREE.Mesh(geometry,material);mesh.position.set(...position);mesh.scale.set(...scale);parent.add(mesh);if(id){mesh.userData.topic=id;this.pickables.push(mesh);}return mesh;}
  sphere(parent,pos,scale,color,id,opts={}){return this.mesh(new THREE.SphereGeometry(1,40,28),this.material(color,opts),parent,id,pos,scale);}
  tube(parent,points,radius,color,id,closed=false){return this.mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(points,closed),Math.max(28,points.length*3),radius,8,closed),this.material(color),parent,id);}

@@ -98,3 +98,11 @@
 新增方向和方法来源在 `omics-expansion.js`，独立场景在 `omics-scenes.js`，46 条分析路线在 `omics-analysis-data.js`，20 个高频方向详解在 `omics-workflow-lessons.js`，解释题在 `omics-case-questions.js`。22 种交互计算在 `omics-analysis-lab.js`，界面在 `omics-analysis-ui.js`。这些文件位于 `dist/js/`；布局在 `dist/omics-analysis.css`。
 
 `tests/omics-analysis.test.mjs` 复核数据单位、归一化、配对、比例与过滤等计算；`tests/browser-analysis.mjs` 检查 46 个场景、分析流程和移动端布局。
+
+## 图表与模型视觉更新（1.7.0）
+
+图表使用湖蓝、珊瑚粉、柔紫与青绿区分数据类别，统一图例、提示卡与绘图区。散点、柱形和曲线在改变条件时提供有限时长的过渡，可重播或关闭；支持系统减少动态效果设置。数据坐标、气泡面积、统计计算和教学范围保持不变。
+
+计数实验并排比较两个样本；通量与区室轮廓使用曲线和当前选择标记；悬停或键盘聚焦带说明的数据对象可查看提示。细胞与46个组学模型提高色彩饱和度，保留旋转、缩放和拾取。
+
+共享表现逻辑在 `dist/js/figure-effects.js`，样式在 `dist/visual-refresh.css`。`tests/browser-visuals.mjs` 核对过渡、重播、提示、减少动画、几何保持和390px布局，截图为 `tests/visual-*.png`。

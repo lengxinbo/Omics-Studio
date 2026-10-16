@@ -1,0 +1,16 @@
+{
+  "date": "2026-10-16T12:18:52.544Z",
+  "status": "passed",
+  "checks": [
+    "hover and Escape tooltip",
+    "replay leaves coordinates and radius unchanged",
+    "PCA moves with actual parameters",
+    "animations settle without continuous jitter",
+    "motion preference persists",
+    "system reduced-motion cancels animations",
+    "counts comparison and flux/profile curves",
+    "cell and omics palette screenshots",
+    "390px layout"
+  ],
+  "errors": []
+}

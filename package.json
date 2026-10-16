@@ -1,10 +1,10 @@
 {
   "name": "omics-studio",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "private": true,
   "type": "module",
   "scripts": {
     "start": "node server.mjs",
-    "check": "node --check dist/js/app.js && node --check dist/js/model.js && node --check dist/js/content.js && node --check dist/js/foundations.js && node --check dist/js/animations.js && node tests/foundations.test.mjs && node --check dist/js/omics-data.js && node --check dist/js/omics-model.js && node --check dist/js/omics-ui.js && node tests/omics.test.mjs && node --check dist/js/integration-ui.js && node tests/integration.test.mjs && node --check dist/js/reading-ui.js && node tests/reading.test.mjs && node --check dist/js/omics-scenes.js && node --check dist/js/omics-analysis-ui.js && node tests/omics-analysis.test.mjs"
+    "check": "node --check dist/js/app.js && node --check dist/js/model.js && node --check dist/js/content.js && node --check dist/js/foundations.js && node --check dist/js/animations.js && node tests/foundations.test.mjs && node --check dist/js/omics-data.js && node --check dist/js/omics-model.js && node --check dist/js/omics-ui.js && node tests/omics.test.mjs && node --check dist/js/integration-ui.js && node tests/integration.test.mjs && node --check dist/js/reading-ui.js && node tests/reading.test.mjs && node --check dist/js/omics-scenes.js && node --check dist/js/omics-analysis-ui.js && node tests/omics-analysis.test.mjs && node --check dist/js/figure-effects.js"
   }
 }
