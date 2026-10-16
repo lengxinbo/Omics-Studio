@@ -1,3 +1,5 @@
+import {newOmicsEntries,bioSources} from './omics-expansion.js';
+import {analysis} from './omics-analysis-data.js';
 // Original teaching text. Stable IDs preserve notes and progress across releases.
 export const omicsGroups=[['core','核心层次与基因组','先建立 DNA、RNA、蛋白质和代谢物的联系'],['regulatory','基因调控与 RNA','进一步观察开关、空间组织和翻译'],['functional','蛋白功能与糖链','从数量走向修饰、结构与相互作用'],['chemical','代谢与元素','区分含量、流动和化学状态'],['community','微生物与群落','把研究对象从单一生物扩展到群落'],['perspective','细胞、空间与系统','按观察尺度、研究问题和干预方式组织证据']];
 export const omicsReferences={
@@ -153,6 +155,9 @@ get('metabolomics').techniques.push(tech('GC–MS|气相色谱分离挥发性或
 get('methylomics').techniques.splice(1,1,tech('RRBS|限制性酶切与片段选择富集部分区域后测序|富集覆盖区域的甲基化比例|关注富含 CpG 区域|不均匀覆盖，不能代表全部基因组'),tech('DNA 甲基化芯片|用预设探针检测选定位点|探针位点的甲基化信号|已设计位点的大队列比较|检测范围受探针与物种设计限制'));
 get('structural-proteomics').techniques.splice(0,1,tech('X 射线晶体学|用晶体的衍射数据重建电子密度与结构|原子坐标与结构模型|适于可获得合适晶体的分子|结晶条件与构象选择可能影响观察'),tech('冷冻电镜|对冷冻样品采集电子图像并重建|三维密度与结构模型|复合物与部分构象异质性研究|样品质量、取向与图像分类影响分辨率'),tech('NMR 结构研究|测量核磁信号及相关空间约束|结构与动态信息|适合相应大小和条件的溶液体系|谱复杂度、样品需求与分子大小影响适用性'));
 get('epigenomics').techniques.push(tech('CUT&RUN|抗体定位后用核酸酶切割并释放附近 DNA|靶标相关区域信号|低背景的特定染色质靶标研究|抗体、消化和释放条件影响结果'));
+omicsEntries.push(...newOmicsEntries);
+for(const [key,ref] of Object.entries(bioSources))omicsReferences['bio-'+key]=ref;
+for(const o of omicsEntries){o.modelFamily=o.model;o.model=o.id;o.analysis=analysis[o.id];o.refs=[...new Set([...o.refs,'bio-'+o.analysis.ref])];}
 omicsEntries.sort((a,b)=>omicsGroups.findIndex(g=>g[0]===a.group)-omicsGroups.findIndex(g=>g[0]===b.group));
 export const omicsById=Object.fromEntries(omicsEntries.map(o=>[o.id,o]));
 export const omicsTopics=omicsEntries.map(o=>({id:o.id,name:o.name,en:o.en,color:['#a99bb8','#9aaeb7','#b4a28d','#9eafa0','#b6a3ae','#92a9b7'][omicsGroups.findIndex(g=>g[0]===o.group)],summary:o.summary,points:o.research,question:o.question,options:o.options,answer:o.answer,explanation:o.explanation,source:'atlas-'+o.refs[0],links:({core:['singlecell-omics','spatial-omics','integration'],regulatory:['epigenomics','transcriptomics','integration'],functional:['proteomics','glycomics','integration'],chemical:['metabolomics','fluxomics','integration'],community:['microbiomics','metagenomics','integration'],perspective:['genomics','transcriptomics','integration']})[o.group].filter(id=>id!==o.id),omics:o}));

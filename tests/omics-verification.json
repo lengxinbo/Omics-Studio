@@ -1,11 +1,11 @@
 {
-  "date": "2026-10-16T08:40:07.687Z",
+  "date": "2026-10-16T11:25:38.802Z",
   "status": "passed",
-  "directions": 40,
-  "modelTypes": 11,
+  "directions": 46,
+  "modelTypes": 46,
   "principleDemos": 8,
   "checks": [
-    "all 40 topics render model and techniques",
+    "all 46 topics render model and techniques",
     "3D zoom drag mesh picking",
     "technique workflow and cross-topic comparison",
     "8 simulations strategy differences",

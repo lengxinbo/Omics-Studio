@@ -11,12 +11,12 @@ const errors=[];page.on('pageerror',e=>errors.push(e.message));
 try{
  await page.goto('http://127.0.0.1:4173');await page.waitForFunction(()=>window.__omics);
  await page.locator('[data-course="omics"]').click();
- await page.screenshot({path:'tests/omics-atlas-overview.png'});assert.equal(await page.locator('.atlas-groups button').count(),6);assert.equal(await page.locator('#topic-list [data-topic]').count(),40);
- assert.ok(await page.locator('.omics-canvas canvas').count());assert.equal(await page.evaluate(()=>__omics.getState().omics.model.type),'dna');
+ await page.screenshot({path:'tests/omics-atlas-overview.png'});assert.equal(await page.locator('.atlas-groups button').count(),6);assert.equal(await page.locator('#topic-list [data-topic]').count(),46);
+ assert.ok(await page.locator('.omics-canvas canvas').count());assert.equal(await page.evaluate(()=>__omics.getState().omics.model.type),'genomics');
  await page.locator('[data-part="2"]').click();assert.equal(await page.evaluate(()=>__omics.getState().omics.model.part),2);
  const old=await page.evaluate(()=>__omics.getState().omics.model.position);await page.locator('[data-om="plus"]').click();assert.notDeepEqual(await page.evaluate(()=>__omics.getState().omics.model.position),old);
  const box=await page.locator('.omics-canvas').boundingBox();await page.mouse.move(box.x+box.width/2,box.y+box.height/2);await page.mouse.down();await page.mouse.move(box.x+box.width/2+100,box.y+box.height/2+20,{steps:6});await page.mouse.up();await page.locator('[data-om="reset"]').click();
- const beforePick=await page.evaluate(()=>__omics.getState().omics.model.part);const pick=await page.evaluate(()=>__omics.projectOmicsPart(0));await page.mouse.click(box.x+pick.x,box.y+pick.y);const afterPick=await page.evaluate(()=>__omics.getState().omics.model.part);assert.notEqual(afterPick,beforePick,'Direct mesh picking must update the explanation');
+ await page.locator('.omics-canvas').scrollIntoViewIfNeeded();await page.waitForTimeout(400);const beforePick=await page.evaluate(()=>__omics.getState().omics.model.part);const pick=await page.evaluate(()=>__omics.projectOmicsPart(0));const pickBox=await page.locator('.omics-canvas').boundingBox();await page.mouse.click(pickBox.x+pick.x,pickBox.y+pick.y);const afterPick=await page.evaluate(()=>__omics.getState().omics.model.part);assert.notEqual(afterPick,beforePick,'Direct mesh picking must update the explanation');
  await page.locator('#stage').scrollIntoViewIfNeeded();await page.screenshot({path:'tests/omics-desktop.png'});
  await page.locator('#compare-topic').selectOption('proteomics');assert.match(await page.locator('#comparison-result').textContent(),/DDA/);
  await page.locator('#compare-b').selectOption('1');assert.match(await page.locator('#comparison-result').textContent(),/DIA/);
@@ -33,6 +33,6 @@ try{
  assert.ok(await mobile.evaluate(()=>document.documentElement.scrollWidth<=390),'Mobile atlas overflow');await mobile.locator('#stage').scrollIntoViewIfNeeded();await mobile.screenshot({path:'tests/omics-mobile.png'});
  await mobile.locator('.mode-tabs [data-mode="process"]').click();await mobile.locator('#omics-seek').fill('80');assert.ok(await mobile.evaluate(()=>document.documentElement.scrollWidth<=390),'Mobile lab overflow');
  await mobile.locator('#compare-topic').selectOption('spatial-omics');assert.ok(await mobile.evaluate(()=>document.documentElement.scrollWidth<=390),'Mobile comparison overflow');
- assert.deepEqual(errors,[]);await fs.writeFile('tests/omics-verification.json',JSON.stringify({date:new Date().toISOString(),status:'passed',directions:40,modelTypes:11,principleDemos:8,checks:['all 40 topics render model and techniques','3D zoom drag mesh picking','technique workflow and cross-topic comparison','8 simulations strategy differences','play pause seek','search and chapter navigation','390px mobile atlas lab comparison','no uncaught browser errors']},null,2));
+ assert.deepEqual(errors,[]);await fs.writeFile('tests/omics-verification.json',JSON.stringify({date:new Date().toISOString(),status:'passed',directions:46,modelTypes:46,principleDemos:8,checks:['all 46 topics render model and techniques','3D zoom drag mesh picking','technique workflow and cross-topic comparison','8 simulations strategy differences','play pause seek','search and chapter navigation','390px mobile atlas lab comparison','no uncaught browser errors']},null,2));
  console.log('PASS: omics atlas, models, simulations, comparisons, navigation and mobile');
 }finally{await browser.close();}

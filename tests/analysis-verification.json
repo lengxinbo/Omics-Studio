@@ -1,0 +1,479 @@
+{
+  "date": "2026-10-16T11:25:17.441Z",
+  "status": "passed",
+  "directions": 46,
+  "distinctGeometry": 46,
+  "labs": 22,
+  "checks": [
+    "paper chapter removed and saved location migrated",
+    "three selectable parts per model",
+    "unique geometry signatures",
+    "46 workflows, sliders, choices and resets",
+    "old notes and answers preserved",
+    "new answers persisted",
+    "46 directions at 390px in both model and analysis modes",
+    "no page errors"
+  ],
+  "results": [
+    {
+      "id": "genomics",
+      "meshes": 32,
+      "parts": [
+        14,
+        15,
+        3
+      ],
+      "lab": "variant"
+    },
+    {
+      "id": "epigenomics",
+      "meshes": 17,
+      "parts": [
+        7,
+        4,
+        6
+      ],
+      "lab": "peaks"
+    },
+    {
+      "id": "transcriptomics",
+      "meshes": 43,
+      "parts": [
+        14,
+        5,
+        24
+      ],
+      "lab": "counts"
+    },
+    {
+      "id": "proteomics",
+      "meshes": 30,
+      "parts": [
+        1,
+        24,
+        5
+      ],
+      "lab": "peptides"
+    },
+    {
+      "id": "metabolomics",
+      "meshes": 10,
+      "parts": [
+        3,
+        3,
+        4
+      ],
+      "lab": "features"
+    },
+    {
+      "id": "pangenomics",
+      "meshes": 9,
+      "parts": [
+        4,
+        4,
+        1
+      ],
+      "lab": "presence"
+    },
+    {
+      "id": "cancer-genomics",
+      "meshes": 22,
+      "parts": [
+        10,
+        7,
+        5
+      ],
+      "lab": "variant"
+    },
+    {
+      "id": "methylomics",
+      "meshes": 50,
+      "parts": [
+        10,
+        36,
+        4
+      ],
+      "lab": "methyl"
+    },
+    {
+      "id": "chromatinomics",
+      "meshes": 16,
+      "parts": [
+        9,
+        2,
+        5
+      ],
+      "lab": "peaks"
+    },
+    {
+      "id": "threed-genomics",
+      "meshes": 52,
+      "parts": [
+        1,
+        2,
+        49
+      ],
+      "lab": "contact"
+    },
+    {
+      "id": "epitranscriptomics",
+      "meshes": 29,
+      "parts": [
+        2,
+        6,
+        21
+      ],
+      "lab": "enrichment"
+    },
+    {
+      "id": "translatomics",
+      "meshes": 13,
+      "parts": [
+        1,
+        9,
+        3
+      ],
+      "lab": "occupancy"
+    },
+    {
+      "id": "regulomics",
+      "meshes": 8,
+      "parts": [
+        3,
+        3,
+        2
+      ],
+      "lab": "network"
+    },
+    {
+      "id": "isoform-omics",
+      "meshes": 10,
+      "parts": [
+        3,
+        4,
+        3
+      ],
+      "lab": "splicing"
+    },
+    {
+      "id": "smallrna-omics",
+      "meshes": 38,
+      "parts": [
+        7,
+        29,
+        2
+      ],
+      "lab": "lengths"
+    },
+    {
+      "id": "phosphoproteomics",
+      "meshes": 42,
+      "parts": [
+        1,
+        8,
+        33
+      ],
+      "lab": "ptm"
+    },
+    {
+      "id": "glycomics",
+      "meshes": 30,
+      "parts": [
+        9,
+        14,
+        7
+      ],
+      "lab": "features"
+    },
+    {
+      "id": "glycoproteomics",
+      "meshes": 17,
+      "parts": [
+        1,
+        9,
+        7
+      ],
+      "lab": "ptm"
+    },
+    {
+      "id": "interactomics",
+      "meshes": 14,
+      "parts": [
+        1,
+        6,
+        7
+      ],
+      "lab": "network"
+    },
+    {
+      "id": "structural-proteomics",
+      "meshes": 4,
+      "parts": [
+        1,
+        1,
+        2
+      ],
+      "lab": "network"
+    },
+    {
+      "id": "secretomics",
+      "meshes": 9,
+      "parts": [
+        1,
+        4,
+        4
+      ],
+      "lab": "peptides"
+    },
+    {
+      "id": "ubiquitinomics",
+      "meshes": 25,
+      "parts": [
+        1,
+        9,
+        15
+      ],
+      "lab": "ptm"
+    },
+    {
+      "id": "acetylomics",
+      "meshes": 7,
+      "parts": [
+        3,
+        1,
+        3
+      ],
+      "lab": "ptm"
+    },
+    {
+      "id": "peptidomics",
+      "meshes": 31,
+      "parts": [
+        1,
+        6,
+        24
+      ],
+      "lab": "peptides"
+    },
+    {
+      "id": "lipidomics",
+      "meshes": 11,
+      "parts": [
+        3,
+        4,
+        4
+      ],
+      "lab": "features"
+    },
+    {
+      "id": "fluxomics",
+      "meshes": 17,
+      "parts": [
+        2,
+        5,
+        10
+      ],
+      "lab": "flux"
+    },
+    {
+      "id": "ionomics",
+      "meshes": 14,
+      "parts": [
+        6,
+        4,
+        4
+      ],
+      "lab": "units"
+    },
+    {
+      "id": "redoxomics",
+      "meshes": 11,
+      "parts": [
+        3,
+        2,
+        6
+      ],
+      "lab": "ptm"
+    },
+    {
+      "id": "microbiomics",
+      "meshes": 39,
+      "parts": [
+        7,
+        28,
+        4
+      ],
+      "lab": "taxa"
+    },
+    {
+      "id": "metagenomics",
+      "meshes": 13,
+      "parts": [
+        4,
+        3,
+        6
+      ],
+      "lab": "taxa"
+    },
+    {
+      "id": "metatranscriptomics",
+      "meshes": 10,
+      "parts": [
+        4,
+        2,
+        4
+      ],
+      "lab": "counts"
+    },
+    {
+      "id": "metaproteomics",
+      "meshes": 31,
+      "parts": [
+        2,
+        13,
+        16
+      ],
+      "lab": "peptides"
+    },
+    {
+      "id": "viromics",
+      "meshes": 19,
+      "parts": [
+        12,
+        2,
+        5
+      ],
+      "lab": "coverage"
+    },
+    {
+      "id": "singlecell-omics",
+      "meshes": 58,
+      "parts": [
+        10,
+        6,
+        42
+      ],
+      "lab": "counts"
+    },
+    {
+      "id": "spatial-omics",
+      "meshes": 43,
+      "parts": [
+        18,
+        19,
+        6
+      ],
+      "lab": "spatial"
+    },
+    {
+      "id": "immunomics",
+      "meshes": 17,
+      "parts": [
+        4,
+        8,
+        5
+      ],
+      "lab": "clones"
+    },
+    {
+      "id": "phenomics",
+      "meshes": 54,
+      "parts": [
+        3,
+        15,
+        36
+      ],
+      "lab": "features"
+    },
+    {
+      "id": "exposomics",
+      "meshes": 12,
+      "parts": [
+        6,
+        2,
+        4
+      ],
+      "lab": "features"
+    },
+    {
+      "id": "perturbomics",
+      "meshes": 72,
+      "parts": [
+        24,
+        6,
+        42
+      ],
+      "lab": "network"
+    },
+    {
+      "id": "organellomics",
+      "meshes": 10,
+      "parts": [
+        3,
+        4,
+        3
+      ],
+      "lab": "profiles"
+    },
+    {
+      "id": "pharmacogenomics",
+      "meshes": 33,
+      "parts": [
+        30,
+        1,
+        2
+      ],
+      "lab": "variant"
+    },
+    {
+      "id": "nutrigenomics",
+      "meshes": 12,
+      "parts": [
+        2,
+        8,
+        2
+      ],
+      "lab": "profiles"
+    },
+    {
+      "id": "toxicogenomics",
+      "meshes": 18,
+      "parts": [
+        4,
+        8,
+        6
+      ],
+      "lab": "profiles"
+    },
+    {
+      "id": "singlecell-atac",
+      "meshes": 71,
+      "parts": [
+        9,
+        6,
+        56
+      ],
+      "lab": "peaks"
+    },
+    {
+      "id": "immune-repertoire",
+      "meshes": 29,
+      "parts": [
+        6,
+        3,
+        20
+      ],
+      "lab": "clones"
+    },
+    {
+      "id": "singlecell-multiome",
+      "meshes": 49,
+      "parts": [
+        5,
+        40,
+        4
+      ],
+      "lab": "pairing"
+    }
+  ]
+}
