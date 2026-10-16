@@ -1,0 +1,22 @@
+{
+  "date": "2026-10-16T09:49:52.982Z",
+  "lessons": 9,
+  "questions": 36,
+  "charts": 9,
+  "checks": [
+    "all readers and step guides",
+    "all chart controls",
+    "point selection and keyboard",
+    "thresholds and reset",
+    "PCA coordinates and recoloring",
+    "spatial aggregation and scales",
+    "ES direction",
+    "autoplay pause and disposal",
+    "legacy notes and exercises",
+    "new answers persisted",
+    "chapter review and search",
+    "all nine charts at 390px",
+    "cell model restoration"
+  ],
+  "errors": []
+}

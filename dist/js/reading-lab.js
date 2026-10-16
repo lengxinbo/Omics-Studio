@@ -1,0 +1,17 @@
+export const mean=a=>a.reduce((s,v)=>s+v,0)/a.length;
+export function quantile(a,p){const s=[...a].sort((x,y)=>x-y),i=(s.length-1)*p,j=Math.floor(i);return s[j]+(s[Math.min(j+1,s.length-1)]-s[j])*(i-j);}
+export function boxStats(a){const q1=quantile(a,.25),q3=quantile(a,.75),iqr=q3-q1,inliers=a.filter(v=>v>=q1-1.5*iqr&&v<=q3+1.5*iqr);return {q1,q3,median:quantile(a,.5),low:Math.min(...inliers),high:Math.max(...inliers)};}
+export const distributions=[[2,2,3,3,4,4],[0,0,0,6,6,6]];
+export const measurements=[2,3,4,5,6,7].flatMap((v,i)=>[-.2,.2].map((d,j)=>({id:`D${i+1}-${j+1}`,donor:`D${i+1}`,group:i<3?0:1,value:v+d})));
+export function sampleRows(collapsed){return collapsed?[...new Set(measurements.map(r=>r.donor))].map(d=>{const rows=measurements.filter(r=>r.donor===d);return {...rows[0],id:d,value:mean(rows.map(r=>r.value))};}):measurements;}
+export const volcanoGenes=[[-2.8,.001],[-1.4,.008],[-.4,.0001],[.3,.4],[1.2,.02],[2.6,.08],[2.2,.0001],[.8,.04],[-2,.2],[1.6,.001]].map(([fc,padj],i)=>({id:`G${i+1}`,fc,padj}));
+export const volcanoPass=(g,fc,p)=>Math.abs(g.fc)>=fc&&g.padj<=p;
+export const heatRows=[[80,90,85,100,110,105],[2,3,2,8,9,8],[35,30,32,12,15,14],[20,20,20,20,20,20]];
+export function zscore(a){const m=mean(a),sd=Math.sqrt(a.reduce((s,v)=>s+(v-m)**2,0)/(a.length-1));return a.map(v=>sd?(v-m)/sd:0);}
+export function pcaData(batch=0){const input=[[1,1],[1.4,1.7],[.8,1.3],[4,3],[4.5,3.7],[3.8,3.2]].map((a,i)=>({id:`S${i+1}`,group:i<3?0:1,batch:i%2,features:[a[0],a[1]+i%2*batch]}));const mx=mean(input.map(r=>r.features[0])),my=mean(input.map(r=>r.features[1]));const centered=input.map(r=>[r.features[0]-mx,r.features[1]-my]);const a=mean(centered.map(r=>r[0]**2)),b=mean(centered.map(r=>r[0]*r[1])),d=mean(centered.map(r=>r[1]**2)),theta=.5*Math.atan2(2*b,a-d),c=Math.cos(theta),s=Math.sin(theta),delta=Math.sqrt((a-d)**2+4*b*b),e1=(a+d+delta)/2,e2=(a+d-delta)/2;return {rows:input.map((r,i)=>({...r,x:centered[i][0]*c+centered[i][1]*s,y:-centered[i][0]*s+centered[i][1]*c})),variance:[e1/(e1+e2)*100,e2/(e1+e2)*100],loading:[c,s]};}
+export const cells=Array.from({length:36},(_,i)=>{const group=Math.floor(i/12),j=i%12,angle=j*2.4,r=10+Math.sqrt(j)*11;return {id:`C${i+1}`,group,batch:j%2,x:[120,265,395][group]+Math.cos(angle)*r,y:[135,85,165][group]+Math.sin(angle)*r*.75,expr:[group===0?(j%4+4):(j%5===0?1:0),group===1?(j%4+4):(j%5===0?1:0),group===2?(j%4+4):(j%5===0?1:0)]};});
+export const markers=['CD3D','MS4A1','LST1'];
+export const groupNames=['候选 T 细胞','候选 B 细胞','候选髓系'];
+export function markerStats(threshold=0){return [0,1,2].flatMap(group=>markers.map((gene,k)=>{const values=cells.filter(c=>c.group===group).map(c=>c.expr[k]);return {id:`${group}-${k}`,group,gene,avg:mean(values),percent:values.filter(v=>v>threshold).length/values.length*100};}));}
+export function spatialBins(coarse=false,gene=0){const result=[];const size=coarse?2:1;for(let y=0;y<6;y+=size)for(let x=0;x<8;x+=size){const values=[];for(let dy=0;dy<size;dy++)for(let dx=0;dx<size;dx++){const px=x+dx,py=y+dy;values.push(gene===0?(px<3?7:1)+(py%2)*.4:(py<3?2.5:1)+(px%2)*.2);}result.push({id:`${x}-${y}`,x,y,size,value:mean(values)});}return result;}
+export function enrichment(mode=0){const hits=mode===0?[0,1,2,4]:mode===1?[2,7,12,17]:[15,17,18,19];let score=0;const points=[0];for(let i=0;i<20;i++){score+=hits.includes(i)?1/hits.length:-1/(20-hits.length);points.push(score);}const es=points.reduce((best,v)=>Math.abs(v)>Math.abs(best)?v:best,0);return {hits,points,es};}

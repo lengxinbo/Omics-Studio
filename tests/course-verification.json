@@ -1,9 +1,9 @@
 {
-  "date": "2026-10-16T08:40:09.711Z",
+  "date": "2026-10-16T09:50:17.677Z",
   "status": "passed",
-  "concepts": 74,
+  "concepts": 79,
   "detailedLessons": 22,
-  "questions": 142,
+  "questions": 174,
   "animations": 9,
   "checks": [
     "legacy records preserved",

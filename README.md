@@ -77,3 +77,13 @@
 课程与题目在 `dist/js/integration-data.js`；可验证计算在 `integration-lab.js`；推演播放器、交互与详解在 `integration-ui.js`；样式在 `dist/integration.css`。旧 `integration`、`case` 的入门题及学习记录键保持兼容。新增案例沿用统一题库、错题、搜索、收藏与笔记。
 
 运行 `node tests/integration.test.mjs` 检查课程与计算，启动网站后运行 `node tests/browser-integration.mjs` 检查七种实验、步骤播放与暂停、方法对比、旧记录与新作答保存、检索、手机布局和退出清理。检查结果及截图位于 `tests/integration-*`。
+
+## 读图、单细胞与空间课堂（1.4.0）
+
+本章扩展为 9 个学习单元、36 道练习和 9 类交互图表；全站 79 个知识点、174 道练习。三个场景串联处理前后表达、PBMC 免疫细胞与组织空间位置，覆盖独立重复、火山图、箱线 / 小提琴图、热图、PCA、UMAP 形态示意、标记气泡图、空间表达图和经典富集曲线。每课包含四步引导、可点击图表、对应数据表、计算范围、参考资料和逐项答案解析。
+
+课程与题目在 `dist/js/reading-data.js`，可复核的计算在 `reading-lab.js`，交互与阅读器在 `reading-ui.js`，样式在 `dist/reading.css`。原有 `replicates`、`volcano`、`singlecell`、`spatial` 的入门题语义与记录键保持不变。
+
+所有图形和数值都是原创教学模拟。二维 PCA 在浏览器内由两个中心化特征计算；UMAP 坐标与候选细胞标签为手工设定。火山图 padj 为预设值；小提琴使用固定带宽的核密度示意；空间聚合为算术平均；富集实验计算经典未加权 ES，未计算 NES、P 值或 FDR。界面明确标注这些范围，不作为真实数据分析工具。
+
+运行 `node tests/reading.test.mjs` 检查计算和兼容性；启动预览后运行 `node tests/browser-reading.mjs` 检查图表控件、点选与键盘选择、自动讲解、记录保存、检索、移动布局和离开页面后的播放器清理。结果及截图保存为 `tests/reading-*`。
