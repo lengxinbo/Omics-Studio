@@ -25,7 +25,7 @@ try{
  // Inspect every teaching phase in one sheet, without relying on a running clock.
  const sheet=await browser.newPage({viewport:{width:1740,height:2100}});
  await sheet.goto('http://127.0.0.1:4173');
- await sheet.evaluate(async()=>{const {molecularLessons,molecularDiagram}=await import('./js/molecular-motion.js');document.body.innerHTML='<main style="background:#eef4f8;padding:20px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px">'+Object.entries(molecularLessons).flatMap(([id,a])=>a.steps.map((s,i)=>`<article style="padding:15px;background:white;border-radius:14px"><h2 style="font-size:16px">${id==='transcription'?'转录':'翻译'} ${i+1} · ${s.title}</h2>${molecularDiagram(id,(i+.7)/a.steps.length)}</article>`)).join('')+'</main>';});
+ await sheet.evaluate(async()=>{const {molecularLessons,molecularDiagram}=await import('./js/molecular-motion.js');document.body.innerHTML='<main style="background:#eef4f8;padding:20px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px">'+Object.entries(molecularLessons).filter(([id])=>['transcription','translation'].includes(id)).flatMap(([id,a])=>a.steps.map((s,i)=>`<article style="padding:15px;background:white;border-radius:14px"><h2 style="font-size:16px">${id==='transcription'?'转录':'翻译'} ${i+1} · ${s.title}</h2>${molecularDiagram(id,(i+.7)/a.steps.length)}</article>`)).join('')+'</main>';});
  await sheet.screenshot({path:'tests/motion-storyboard.png',fullPage:true});
  const mobile=await browser.newPage({viewport:{width:390,height:844},isMobile:true,hasTouch:true,reducedMotion:'reduce'});mobile.on('pageerror',e=>errors.push(e.message));
  await mobile.goto('http://127.0.0.1:4173');await mobile.waitForFunction(()=>window.__omics);

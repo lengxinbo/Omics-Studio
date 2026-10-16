@@ -111,7 +111,7 @@ export class AnimationPlayer{
    this.activeStep=index;
   }
   this.root.querySelector('.animation-legend').textContent=a.legend.join('  ·  ');this.root.querySelector('.animation-note').textContent=a.note;
-  const source=this.root.querySelector('.animation-source');source.hidden=!a.source;if(a.source)source.href=a.source;
+  const source=this.root.querySelector('.animation-source');source.hidden=!a.source;if(a.source){source.href=a.source;source.textContent='参考：'+(a.sourceLabel||'Molecular Biology of the Cell · NCBI Bookshelf')+' ↗';}
   this.root.querySelector('[data-anim="prev"]').disabled=index===0;this.root.querySelector('[data-anim="next"]').disabled=index===n-1;this.updateButton();
  }
  updateButton(){const b=this.root.querySelector('[data-anim="play"]');if(b){b.textContent=this.playing?'暂停':'连续播放';b.setAttribute('aria-pressed',String(this.playing));}}

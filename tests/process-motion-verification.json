@@ -1,0 +1,18 @@
+{
+  "date": "2026-10-16T12:52:08.851Z",
+  "status": "passed",
+  "replicationSteps": 7,
+  "splicingSteps": 6,
+  "signalingSteps": 7,
+  "checks": [
+    "all 20 phase captions",
+    "play current step and stop before next",
+    "continuous play resumes",
+    "pause freezes actual SVG",
+    "timeline and replay",
+    "keyboard chapter selection",
+    "390px layout and detail zoom",
+    "reduced motion manual playback",
+    "no page errors"
+  ]
+}
