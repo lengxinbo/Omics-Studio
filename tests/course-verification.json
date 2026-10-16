@@ -1,0 +1,18 @@
+{
+  "date": "2026-10-16T05:20:24.129Z",
+  "status": "passed",
+  "concepts": 33,
+  "detailedLessons": 22,
+  "questions": 77,
+  "animations": 9,
+  "checks": [
+    "legacy records preserved",
+    "question paging and feedback",
+    "review chapter filtering",
+    "animation play pause seek speed reset",
+    "animation topic alignment",
+    "3D mesh picking rotation zoom",
+    "390px mobile overflow",
+    "no browser errors"
+  ]
+}

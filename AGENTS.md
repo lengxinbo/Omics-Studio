@@ -11,7 +11,7 @@
 
 ## 扩展方式
 
-- 课程和题目修改入口为 `dist/js/content.js`；保留现有知识点 id 以兼容用户学习记录。
+- 课程入口为 `dist/js/content.js`，入门详解和新增题目为 `dist/js/foundations.js`，统一题库与迁移逻辑为 `dist/js/exercises.js`，过程动画为 `dist/js/animations.js`；保留现有知识点 id 以兼容用户学习记录。
 - 三维模型位于 `dist/js/model.js`，页面交互位于 `dist/js/app.js`，样式位于 `dist/style.css`。
 - 保持用户认可的浅色三栏布局和低饱和度模型。细胞模型必须支持旋转、缩放和点击结构查看讲解。
 - 课程面向零基础用户，关键术语提供英文；模型与模拟数据要保持清楚标注，科学表述与证据一致。
