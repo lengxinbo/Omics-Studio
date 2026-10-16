@@ -1,3 +1,4 @@
+import {paperTopics,paperLessons,paperSources} from './papers-data.js';
 import {readingTopics,readingLessons,readingSources} from './reading-data.js';
 import {integrationTopics,integrationLessons,integrationSources} from './integration-data.js';
 import {newTopics,lessons,foundationSources} from './foundations.js';
@@ -35,6 +36,8 @@ export const topics=[
  t('case','从问题到证据','From question to evidence','#9baeb2','为什么某个基因的 RNA 增加，而对应蛋白质变化不明显？这个问题可以串联转录、翻译与降解等多个层面。',['先确认样本与测量时间是否匹配。','再考虑翻译效率、蛋白质稳定性与测量覆盖。','设计后续实验，区分不同解释。'],'面对 RNA 与蛋白质不一致，第一步更合理的是？',['核对样本、时间与测量条件','立即认定其中一种技术错误'],0,'先确认数据可比性，再提出并检验生物学解释。',['rna','protein','integration'],'omics')
 ];
 topics.push(...newTopics);
+topics.push(...paperTopics);
+Object.assign(sources,paperSources);
 topics.push(...readingTopics);
 Object.assign(sources,readingSources);
 for(const l of readingLessons){Object.assign(topics.find(t=>t.id===l.id),{reading:l,name:l.name,en:l.en,summary:l.summary,points:l.points,source:l.source});}
@@ -52,7 +55,8 @@ export const courses=[
  {id:'expression',name:'基因如何表达',en:'FROM CODE TO FUNCTION',title:'让遗传信息开始工作',subtitle:'跟着复制、转录、剪接与翻译，理解信息如何被保存和使用。',icon:'process',kind:'molecule',minutes:50,topics:['replication','transcription','rna-processing','translation','regulation','signaling']},
  {id:'omics',name:'认识组学 · 全景图谱',en:'THE OMICS ATLAS',title:'走进组学的全景世界',subtitle:'从研究对象到测量方法，用模型与实验台理解每一种视角。',icon:'layers',kind:'cards',minutes:180,topics:omicsTopics.map(t=>t.id)},
  {id:'data',name:'读图、单细胞与空间',en:'LEARN TO READ THE DATA',title:'让每一张图都读得明白',subtitle:'从表达变化到细胞身份与组织位置，九种读图练习把图像连接到证据。',icon:'chart',kind:'data',minutes:110,topics:readingLessons.map(l=>l.id)},
- {id:'integration',name:'多组学整合 · 案例课堂',en:'CONNECT THE EVIDENCE',title:'把不同层次的证据连接起来',subtitle:'四个研究案例，七种动手实验，从样本配对走到可验证的解释。',icon:'network',kind:'cards',minutes:100,topics:integrationLessons.map(l=>l.id)}
+ {id:'integration',name:'多组学整合 · 案例课堂',en:'CONNECT THE EVIDENCE',title:'把不同层次的证据连接起来',subtitle:'四个研究案例，七种动手实验，从样本配对走到可验证的解释。',icon:'network',kind:'cards',minutes:100,topics:integrationLessons.map(l=>l.id)},
+ {id:'papers',name:'真实论文 · 逐图精读',en:'READ REAL PAPERS',title:'跟着证据读懂一篇论文',subtitle:'两篇开放论文，六节原图导读：从研究问题到实验，再从图表走向结论。',icon:'data',kind:'papers',minutes:100,topics:paperLessons.map(l=>l.id)}
 ];
 export const processes={
  cell:[{title:'从细胞核读取信息',text:'细胞核中的 DNA 为 RNA 合成提供模板。先选中细胞核，认识信息的起点。',topic:'nucleus'},{title:'核糖体合成多肽',text:'部分 RNA 作为 mRNA 被核糖体读取，氨基酸逐步连接为多肽链。',topic:'ribosome'},{title:'内质网参与加工',text:'许多分泌蛋白和膜蛋白在粗面内质网相关区域合成，并进入加工与运输路线。',topic:'er'},{title:'高尔基体分拣运输',text:'高尔基体进一步加工和分拣这些蛋白质，再由囊泡运输到相应位置。',topic:'golgi'}],
