@@ -67,3 +67,13 @@
 - Three.js 0.170.0 与 OrbitControls，MIT 许可证保存在 `dist/vendor/THREE-LICENSE.txt`。
 - 界面方向参考 https://github.com/cclank/cell-architecture-studio ，本项目三维几何与应用代码独立编写。
 - 内容延伸阅读链接位于 `dist/js/content.js`。本项目未复制参考仓库的模型文件或教材插图。
+
+## 多组学整合案例课堂（1.3.0）
+
+新增 8 个学习单元、四个研究案例和 40 个推演步骤；本章共 32 道练习，全站共 74 个知识点与 142 道练习。案例背景为乳腺癌蛋白基因组、SHARE-seq、CITE-seq 与 IBD 纵向多组学，原始论文与官方方法文档可从课堂打开。全部数值为原创教学模拟，不是论文数据复现。
+
+七种交互实验覆盖样本对齐、批次混杂、RNA / 蛋白响应延迟、细胞类型造成的总体相关、模态权重、相对丰度分母效应和供者级验证划分。方法选择页比较特征拼接、MOFA+、DIABLO、WNN 与后期证据汇合；实验台不执行这些真实整合工具。
+
+课程与题目在 `dist/js/integration-data.js`；可验证计算在 `integration-lab.js`；推演播放器、交互与详解在 `integration-ui.js`；样式在 `dist/integration.css`。旧 `integration`、`case` 的入门题及学习记录键保持兼容。新增案例沿用统一题库、错题、搜索、收藏与笔记。
+
+运行 `node tests/integration.test.mjs` 检查课程与计算，启动网站后运行 `node tests/browser-integration.mjs` 检查七种实验、步骤播放与暂停、方法对比、旧记录与新作答保存、检索、手机布局和退出清理。检查结果及截图位于 `tests/integration-*`。

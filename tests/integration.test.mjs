@@ -1,0 +1,20 @@
+import assert from 'node:assert/strict';
+import {integrationLessons,integrationSources,integrationMethods} from '../dist/js/integration-data.js';
+import {correlation,pairedRows,timeValues,regulationRows,immuneCells,immuneScore,composition,validationRows,overlapCount,batchEffects} from '../dist/js/integration-lab.js';
+import {courses,byId} from '../dist/js/content.js';
+import {questionBank,restoreAnswers} from '../dist/js/exercises.js';
+assert.equal(integrationLessons.length,8);assert.equal(new Set(integrationLessons.map(l=>l.lab)).size,7);
+assert.equal(questionBank.filter(q=>q.courseId==='integration').length,32);
+assert.equal(integrationMethods.length,5);
+for(const l of integrationLessons){assert.equal(l.steps.length,5);assert.ok(integrationSources[l.source]);assert.ok(byId[l.id].integration);assert.ok(courses.find(c=>c.id==='integration').topics.includes(l.id));for(const s of l.steps)for(const key of ['title','action','readout','meaning'])assert.ok(s[key].trim().length>0);}
+const r=rows=>correlation(rows.map(r=>r.x),rows.map(r=>r.y));
+assert.equal(r(pairedRows()),1);assert.ok(r(pairedRows(false))<.2);
+assert.equal(r(regulationRows(true)),0);assert.ok(r(regulationRows(false))>.8);
+assert.equal(correlation([1,1],[2,3]),null);
+assert.equal(timeValues(0,8).rna,1);assert.equal(timeValues(6,8).protein,1);assert.ok(timeValues(24,8).protein>3.5);
+assert.equal(immuneScore(immuneCells[1],1),.2);assert.equal(immuneScore(immuneCells[1],0),.9);
+assert.equal(composition(80).percent,20);assert.equal(composition(20).percent,50);assert.equal(composition(0).percent,100);
+assert.equal(overlapCount(validationRows(false)),4);assert.equal(overlapCount(validationRows(true)),0);
+assert.equal(batchEffects(false,6).observed,8);assert.equal(batchEffects(true,6).observed,2);assert.equal(batchEffects(false,0).identifiable,false);
+const old=restoreAnswers({answers:{integration:0,case:0},exerciseAnswers:{'case:lag':0}});assert.equal(old['integration:intro'],0);assert.equal(old['case:intro'],0);assert.equal(old['case:lag'],0);
+console.log('PASS: 8 integration lessons, 32 questions, 7 interactive experiments, 5 method strategies; calculations and legacy records verified');

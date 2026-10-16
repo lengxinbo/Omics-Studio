@@ -1,0 +1,25 @@
+{
+  "date": "2026-10-16T08:42:02.464Z",
+  "lessons": 8,
+  "questions": 32,
+  "experiments": 7,
+  "methods": 5,
+  "checks": [
+    "all case steps and readers",
+    "sample alignment",
+    "batch identifiability",
+    "RNA-protein timing and reset",
+    "within-type correlation",
+    "weighting and cell selection",
+    "compositional effect",
+    "donor split leakage",
+    "method comparison",
+    "autoplay pause and disposal",
+    "quiz feedback and persistence",
+    "legacy notes and answers",
+    "search",
+    "390px overflow",
+    "existing cell viewer"
+  ],
+  "errors": []
+}

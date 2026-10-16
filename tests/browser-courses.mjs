@@ -33,7 +33,7 @@ try {
  await page.locator('[data-course="expression"]').click();await page.locator('[data-mode="process"]').click();
  for(const id of ['replication','transcription','splicing','translation','signaling']){await page.locator('#animation-select').selectOption(id);await page.locator('#animation-seek').fill('780');assert.match(await page.locator('.animation-step').textContent(),/4/);}
  await page.locator('#animation-select').selectOption('translation');await page.locator('#animation-seek').fill('610');await page.screenshot({path:'tests/translation-desktop.png'});
- await page.locator('.topnav [data-view="review"]').click();assert.equal(await page.locator('.review-card').count(),112);
+ await page.locator('.topnav [data-view="review"]').click();assert.equal(await page.locator('.review-card').count(),142);
  await page.locator('#review-course').selectOption('cell');assert.equal(await page.locator('.review-card').count(),27);
  await page.locator('[data-filter="wrong"]').click();assert.ok(await page.locator('.review-card').count()>=1);
  await page.locator('[data-filter="all"]').click();await page.locator('.topnav [data-view="explore"]').click();
@@ -52,6 +52,6 @@ try {
  await sheet.screenshot({path:'tests/process-overview.png'});
  assert.deepEqual(errors,[]);
 
- await fs.writeFile('tests/course-verification.json',JSON.stringify({date:new Date().toISOString(),status:'passed',concepts:68,detailedLessons:22,questions:112,animations:9,checks:['legacy records preserved','question paging and feedback','review chapter filtering','animation play pause seek speed reset','animation topic alignment','3D mesh picking rotation zoom','390px mobile overflow','no browser errors']},null,2));
+ await fs.writeFile('tests/course-verification.json',JSON.stringify({date:new Date().toISOString(),status:'passed',concepts:74,detailedLessons:22,questions:142,animations:9,checks:['legacy records preserved','question paging and feedback','review chapter filtering','animation play pause seek speed reset','animation topic alignment','3D mesh picking rotation zoom','390px mobile overflow','no browser errors']},null,2));
  console.log('PASS: browser course interactions, migration, animations, 3D regression and mobile layout');
 } finally {await browser.close();}
