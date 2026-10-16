@@ -1,0 +1,19 @@
+{
+  "date": "2026-10-16T13:16:44.101Z",
+  "status": "passed",
+  "transportSteps": 6,
+  "secretionSteps": 7,
+  "atpSteps": 6,
+  "enzymeSteps": 6,
+  "checks": [
+    "all 25 phase captions",
+    "play current step and stop before next",
+    "continuous play resumes",
+    "pause freezes actual SVG",
+    "timeline and replay",
+    "keyboard chapter selection",
+    "390px layout and detail zoom",
+    "reduced motion manual playback",
+    "no page errors"
+  ]
+}

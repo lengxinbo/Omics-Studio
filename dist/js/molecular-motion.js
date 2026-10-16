@@ -1,10 +1,12 @@
 import {processLessons,processState,processDiagram} from './process-motion.js';
+import {cellLessons,cellState,cellDiagram} from './cell-motion.js';
 // Positions, binding and release all share one seekable clock. No independent loops.
 const clamp=v=>Math.max(0,Math.min(1,v));
 const ease=v=>{v=clamp(v);return v*v*(3-2*v);};
 const mix=(a,b,t)=>a+(b-a)*t;
 const S=(title,text,look)=>({title,text,look});
 export const molecularLessons={
+ ...cellLessons,
  ...processLessons,
  transcription:{duration:42000,title:'转录：跟随一条 RNA 的诞生',legend:['紫色双链：DNA','青色链：RNA','金色外形：RNA 聚合酶'],note:'教学短序列，非等比例；聚合酶与辅助因子简化。终止画面只展示共同结果，未展开不同生物的终止机制。',source:'https://www.ncbi.nlm.nih.gov/books/NBK26887/',steps:[
  S('就位：聚合酶靠近 DNA','RNA 聚合酶在启动区域与相关因子协作，建立转录起始复合物。DNA 是模板，游离核糖核苷三磷酸（NTP）是合成 RNA 的原料。','看金色聚合酶沿虚线靠近紫色 DNA；此时尚未产生 RNA。'),
@@ -24,6 +26,7 @@ export const molecularLessons={
  S('释放：RF 识别 UAA，肽链离开','释放因子（RF）识别 A 位的终止密码子，促使肽链与 tRNA 之间的连接水解。肽链释放后，翻译复合物解离并被回收。','先看橙色 RF 进入，再看完整肽链离开，最后看蓝色亚基分开；不会出现“终止 tRNA”。') ]}
 };
 export function molecularState(id,p){
+ if(cellLessons[id])return cellState(id,p);
  if(processLessons[id])return processState(id,p);
  const n=molecularLessons[id].steps.length,t=clamp(p)*n,phase=Math.min(n-1,Math.floor(t)),f=clamp(t-phase);
  if(id==='transcription'){
@@ -85,4 +88,4 @@ function translation(s){
  if(phase===3||phase===6)b+=path(`M${pSite-50} 386H${pSite+50}l-8 -5m8 5l-8 5`,C.ribo,2);
  return b;
 }
-export function molecularDiagram(id,p){if(processLessons[id])return processDiagram(id,p);const s=molecularState(id,p);return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 445" role="img" aria-label="${molecularLessons[id].title}：${molecularLessons[id].steps[s.phase].title}" font-family="system-ui,Microsoft YaHei,sans-serif"><title>${molecularLessons[id].steps[s.phase].title}</title>${id==='transcription'?transcription(s):translation(s)}</svg>`;}
+export function molecularDiagram(id,p){if(cellLessons[id])return cellDiagram(id,p);if(processLessons[id])return processDiagram(id,p);const s=molecularState(id,p);return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 445" role="img" aria-label="${molecularLessons[id].title}：${molecularLessons[id].steps[s.phase].title}" font-family="system-ui,Microsoft YaHei,sans-serif"><title>${molecularLessons[id].steps[s.phase].title}</title>${id==='transcription'?transcription(s):translation(s)}</svg>`;}
